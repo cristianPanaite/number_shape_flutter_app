@@ -7,6 +7,7 @@ String processNumber(String value){
   String message = "Number $value is";
   bool okSquare = isSquare(intValue);
   bool okTriangular = isTriangular(intValue);
+  bool okCube = isCube(intValue);
   if(okSquare == true){
     message += " SQUARE";
   }
@@ -16,8 +17,14 @@ String processNumber(String value){
     message += " TRIANGULAR";
   }
 
-  if(!(okSquare || okTriangular))
-    message += " neither SQUARE or TRIANGULAR";
+  if(okCube == true){
+    if(okSquare == true || okTriangular == true)
+      message += " and";
+    message += " CUBE";
+  }
+
+  if(!((okSquare || okTriangular) || okCube))
+    message += " neither SQUARE, TRIANGULAR or CUBE";
 
   return message;
 }
@@ -59,4 +66,29 @@ bool isTriangular(int num){
     return true;
 
   return false;
+}
+
+bool isCube(int num){
+  int fr = 0;
+  while(num % 2 == 0){
+
+    num = num ~/ 2;
+    fr++;
+  }
+
+
+  if(fr % 3 != 0)
+    return false;
+  print(fr % 3 != 0);
+  for(int d = 3; d*d <= num; d+=2){
+    print("aici");
+    fr = 0;
+    while(num % d == 0){
+      num = num ~/ 2;
+      fr++;
+    }
+    if(fr > 0 && fr % 3 != 0)
+      return false;
+  }
+  return true;
 }
